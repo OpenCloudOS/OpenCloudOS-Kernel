@@ -1,5 +1,7 @@
 #include <linux/utsname.h>
+#include <linux/user_namespace.h>
 #include <linux/module.h>
+#include <linux/quota.h>
 #include <linux/kernel.h>
 #include <linux/major.h>
 #include <linux/syscalls.h>
@@ -39,6 +41,9 @@ struct clk {
 struct stp_proto {
 };
 
+struct i2c_adapter{
+};
+
 struct miscdevice{
 };
 
@@ -49,6 +54,9 @@ struct fid{
 };
 
 struct sysrq_key_op{
+};
+
+struct nshhdr{
 };
 
 struct nvmem_cell {
@@ -488,16 +496,28 @@ SYSCALL_DEFINE3(getrandom, char __user *, buf, size_t, count,
 	return 0;
 }
 
-//int memcpy (void *dst, void *src, int len)
-//{
-//	return 0;
-//}
-//EXPORT_SYMBOL_GPL(memcpy);
-//
-//int __memcpy_mcsafe (void *dst, void *src, int len)
-//{
-//	return 0;
-//}
-//EXPORT_SYMBOL_GPL(__memcpy_mcsafe);
+int nsh_push(struct sk_buff *skb, const struct nshhdr *pushed_nh)
+{
+	return 0;
+}
+EXPORT_SYMBOL_GPL(nsh_push);
+
+int nsh_pop(struct sk_buff *skb)
+{
+	return 0;
+}
+EXPORT_SYMBOL_GPL(nsh_pop);
+
+qid_t from_kqid(struct user_namespace *targ, struct kqid kqid)
+{
+	return 0;
+}
+EXPORT_SYMBOL_GPL(from_kqid);
+
+int i2c_bit_add_bus(struct i2c_adapter *adap)
+{
+	return 0;
+}
+EXPORT_SYMBOL_GPL(i2c_bit_add_bus);
 
 MODULE_LICENSE("GPL");

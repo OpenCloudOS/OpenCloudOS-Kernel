@@ -76,6 +76,8 @@ module_param_named(vpid, enable_vpid, bool, 0444);
 static bool __read_mostly enable_vnmi = 1;
 module_param_named(vnmi, enable_vnmi, bool, S_IRUGO);
 
+static struct kmem_cache *x86_fpu_cache;
+
 bool __read_mostly flexpriority_enabled = 1;
 module_param_named(flexpriority, flexpriority_enabled, bool, S_IRUGO);
 

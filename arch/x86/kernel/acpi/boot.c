@@ -976,6 +976,7 @@ static int __init acpi_parse_fadt(struct acpi_table_header *table)
 	}
 
 #ifdef CONFIG_X86_PM_TIMER
+#if 0
 	/* detect the location of the ACPI PM Timer */
 	if (acpi_gbl_FADT.header.revision >= FADT2_REVISION_ID) {
 		/* FADT rev. 2 */
@@ -998,6 +999,7 @@ static int __init acpi_parse_fadt(struct acpi_table_header *table)
 	if (pmtmr_ioport)
 		printk(KERN_INFO PREFIX "PM-Timer IO Port: %#x\n",
 		       pmtmr_ioport);
+#endif
 #endif
 	return 0;
 }

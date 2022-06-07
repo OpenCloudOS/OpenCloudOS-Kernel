@@ -564,8 +564,11 @@ static void __print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 {
 #ifdef CONFIG_FAIR_GROUP_SCHED
+	char path[1024];
+
+	task_group_path(cfs_rq->tg, path, 1024);
 	SEQ_printf(m, "\n");
-	SEQ_printf(m, "cfs_rq[%d]:%s\n", cpu, task_group_path(cfs_rq->tg));
+	SEQ_printf(m, "cfs_rq[%d]:%s\n", cpu, path);
 #else
 	SEQ_printf(m, "\n");
 	SEQ_printf(m, "cfs_rq[%d]:\n", cpu);
@@ -597,8 +600,12 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 void print_bt_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 {
 #ifdef CONFIG_FAIR_GROUP_SCHED
+	char path[1024];
+
+	task_group_path(cfs_rq->tg, path, 1024);
+
 	SEQ_printf(m, "\n");
-	SEQ_printf(m, "bt_rq[%d]:%s\n", cpu, task_group_path(cfs_rq->tg));
+	SEQ_printf(m, "bt_rq[%d]:%s\n", cpu, path);
 #else
 	SEQ_printf(m, "\n");
 	SEQ_printf(m, "bt_rq[%d]:\n", cpu);

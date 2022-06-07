@@ -1591,8 +1591,10 @@ getsockopt(struct sock *sk, int cmd, void __user *user, int *len)
 
 		case NETATOP_GETCNT_TGID:
 		tasktype = 'g';
-
+		goto conti;
+		
 		case NETATOP_GETCNT_PID:
+conti:
 		if (*len < sizeof(pid_t))
 			return -EINVAL;
 

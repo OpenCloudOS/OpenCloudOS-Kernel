@@ -1215,7 +1215,8 @@ extern int __init efi_setup_pcdp_console(char *);
  */
 static inline bool efi_enabled(int feature)
 {
-	return test_bit(feature, &efi.flags) != 0;
+	//return test_bit(feature, &efi.flags) != 0;
+	return false;
 }
 extern void efi_reboot(enum reboot_mode reboot_mode, const char *__unused);
 #else

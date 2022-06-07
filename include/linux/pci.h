@@ -2427,5 +2427,6 @@ void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
 
 #define pci_info_ratelimited(pdev, fmt, arg...) \
 	dev_info_ratelimited(&(pdev)->dev, fmt, ##arg)
+struct pci_dev *pci_real_dma_dev(struct pci_dev *dev);
 
 #endif /* LINUX_PCI_H */

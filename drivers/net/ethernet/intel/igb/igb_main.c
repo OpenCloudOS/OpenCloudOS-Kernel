@@ -3609,7 +3609,7 @@ out:
 static void igb_remove_i2c(struct igb_adapter *adapter)
 {
 	/* free the adapter bus structure */
-	i2c_del_adapter(&adapter->i2c_adap);
+	//i2c_del_adapter(&adapter->i2c_adap);
 }
 
 /**
@@ -9487,7 +9487,7 @@ s32 igb_read_i2c_byte(struct e1000_hw *hw, u8 byte_offset,
 	if (hw->mac.ops.acquire_swfw_sync(hw, swfw_mask))
 		return E1000_ERR_SWFW_SYNC;
 
-	status = i2c_smbus_read_byte_data(this_client, byte_offset);
+	//status = i2c_smbus_read_byte_data(this_client, byte_offset);
 	hw->mac.ops.release_swfw_sync(hw, swfw_mask);
 
 	if (status < 0)
@@ -9521,7 +9521,7 @@ s32 igb_write_i2c_byte(struct e1000_hw *hw, u8 byte_offset,
 
 	if (hw->mac.ops.acquire_swfw_sync(hw, swfw_mask))
 		return E1000_ERR_SWFW_SYNC;
-	status = i2c_smbus_write_byte_data(this_client, byte_offset, data);
+	//status = i2c_smbus_write_byte_data(this_client, byte_offset, data);
 	hw->mac.ops.release_swfw_sync(hw, swfw_mask);
 
 	if (status)

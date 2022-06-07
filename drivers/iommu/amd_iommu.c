@@ -58,6 +58,8 @@
 #define MSI_RANGE_END		(0xfeefffff)
 #define HT_RANGE_START		(0xfd00000000ULL)
 #define HT_RANGE_END		(0xffffffffffULL)
+#define X86_MSI_BASE_ADDRESS_LOW   (0xfee00000 >> 20)
+#define X86_MSI_BASE_ADDRESS_HIGH   (0)
 
 /*
  * This bitmap is used to advertise the page sizes our hardware support
@@ -97,6 +99,11 @@ struct iommu_cmd {
 };
 
 struct kmem_cache *amd_iommu_irq_cache;
+
+static int x86_fwspec_is_ioapic(struct irq_fwspec *fwspec)
+{return 0;}
+static int x86_fwspec_is_hpet(struct irq_fwspec *fwspec)
+{return 0;}
 
 static void update_domain(struct protection_domain *domain);
 static int protection_domain_init(struct protection_domain *domain);
@@ -2287,6 +2294,7 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
 static void amd_iommu_probe_finalize(struct device *dev)
 {
 	struct iommu_domain *domain;
+	struct iommu_dev_data *dev_data = dev->archdata.iommu;
 
 	/* Domains are initialized for this device - have a look what we ended up with */
 	domain = iommu_get_domain_for_dev(dev);
@@ -4125,7 +4133,7 @@ static void fill_msi_msg(struct msi_msg *msg, u32 index)
 {
 	msg->data = index;
 	msg->address_lo = 0;
-	msg->arch_addr_lo.base_address = X86_MSI_BASE_ADDRESS_LOW;
+	msg->arch_addr_lo.address_lo = X86_MSI_BASE_ADDRESS_LOW;
 	msg->address_hi = X86_MSI_BASE_ADDRESS_HIGH;
 }
 

@@ -16,12 +16,16 @@
 #ifdef CONFIG_X86_PM_TIMER
 
 extern u32 acpi_pm_read_verified(void);
+#if 0
 extern u32 pmtmr_ioport;
+#endif
 
 static inline u32 acpi_pm_read_early(void)
 {
+#if 0
 	if (!pmtmr_ioport)
 		return 0;
+#endif
 	/* mask the output to 24 bits */
 	return acpi_pm_read_verified() & ACPI_PM_MASK;
 }

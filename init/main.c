@@ -684,6 +684,7 @@ asmlinkage __visible void __init start_kernel(void)
 	softirq_init();
 	timekeeping_init();
 
+#if 0
 	/*
 	 * For best initial stack canary entropy, prepare it after:
 	 * - setup_arch() for any UEFI RNG entropy and boot cmdline access
@@ -693,6 +694,7 @@ asmlinkage __visible void __init start_kernel(void)
 	 * - adding command line entropy
 	 */
 	rand_initialize();
+#endif
 	add_latent_entropy();
 	add_device_randomness(command_line, strlen(command_line));
 	boot_init_stack_canary();
@@ -753,9 +755,11 @@ asmlinkage __visible void __init start_kernel(void)
 	calibrate_delay();
 	pid_idr_init();
 	anon_vma_init();
-#ifdef CONFIG_X86
+#ifdef CONFIG_X86 
+#if 0
 	if (efi_enabled(EFI_RUNTIME_SERVICES))
 		efi_enter_virtual_mode();
+#endif
 #endif
 	thread_stack_cache_init();
 	cred_init();

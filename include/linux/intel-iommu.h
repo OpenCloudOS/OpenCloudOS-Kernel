@@ -394,6 +394,10 @@ enum {
 #define QI_GRAN_NONG_PASID		2
 #define QI_GRAN_PSI_PASID		3
 
+#define VTD_FLAG_TRANS_PRE_ENABLED  (1 << 0)
+#define VTD_FLAG_IRQ_REMAP_PRE_ENABLED  (1 << 1)
+#define VTD_FLAG_SVM_CAPABLE              (1 << 2)
+
 #define qi_shift(iommu)		(DMAR_IQ_SHIFT + !!ecap_smts((iommu)->ecap))
 
 struct qi_desc {
@@ -490,6 +494,12 @@ struct context_entry {
 	u64 hi;
 };
 
+struct subdev_domain_info
+{
+	struct device *pdev; /* it's NULL for PCIe-to-PCI bridge */
+	struct list_head link_domain;
+};
+
 struct dmar_domain {
 	int	nid;			/* node id */
 
@@ -505,6 +515,7 @@ struct dmar_domain {
 
 	bool has_iotlb_device;
 	struct list_head devices;	/* all devices' list */
+	struct list_head subdevices;/* all subdevices' list */
 	struct list_head auxd;		/* link to device's auxiliary list */
 	struct iova_domain iovad;	/* iova's that belong to this domain */
 

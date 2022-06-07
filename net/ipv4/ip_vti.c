@@ -29,13 +29,13 @@
 #include <linux/netfilter_ipv4.h>
 #include <linux/if_ether.h>
 #include <linux/icmpv6.h>
+#include <net/xfrm.h>
 
 #include <net/sock.h>
 #include <net/ip.h>
 #include <net/icmp.h>
 #include <net/ip_tunnels.h>
 #include <net/inet_ecn.h>
-#include <net/xfrm.h>
 #include <net/net_namespace.h>
 #include <net/netns/generic.h>
 
@@ -140,6 +140,7 @@ static int vti_rcv_cb(struct sk_buff *skb, int err)
 		return 0;
 	}
 
+#ifdef CONFIG_XFRM
 	x = xfrm_input_state(skb);
 
 	inner_mode = &x->inner_mode;
@@ -161,6 +162,7 @@ static int vti_rcv_cb(struct sk_buff *skb, int err)
 
 	if (!ret)
 		return -EPERM;
+#endif
 
 	skb_scrub_packet(skb, !net_eq(tunnel->net, dev_net(skb->dev)));
 	skb->dev = dev;
@@ -250,11 +252,13 @@ static netdev_tx_t vti_xmit(struct sk_buff *skb, struct net_device *dev,
 		goto tx_error_icmp;
 	}
 
+#ifdef CONFIG_XFRM
 	if (!vti_state_check(dst->xfrm, parms->iph.daddr, parms->iph.saddr)) {
 		dev->stats.tx_carrier_errors++;
 		dst_release(dst);
 		goto tx_error_icmp;
 	}
+#endif
 
 	tdev = dst->dev;
 
@@ -314,11 +318,15 @@ static netdev_tx_t vti_tunnel_xmit(struct sk_buff *skb, struct net_device *dev)
 
 	switch (skb->protocol) {
 	case htons(ETH_P_IP):
+#ifdef CONFIG_XFRM
 		xfrm_decode_session(skb, &fl, AF_INET);
+#endif
 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
 		break;
 	case htons(ETH_P_IPV6):
+#ifdef CONFIG_XFRM
 		xfrm_decode_session(skb, &fl, AF_INET6);
+#endif
 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
 		break;
 	default:

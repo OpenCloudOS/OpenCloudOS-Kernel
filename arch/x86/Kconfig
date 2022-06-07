@@ -2575,7 +2575,7 @@ source "kernel/power/Kconfig"
 
 source "drivers/acpi/Kconfig"
 
-source "drivers/sfi/Kconfig"
+#source "drivers/sfi/Kconfig"
 
 config X86_APM_BOOT
 	def_bool y
@@ -2703,9 +2703,9 @@ config APM_ALLOW_INTS
 
 endif # APM
 
-source "drivers/cpufreq/Kconfig"
+#source "drivers/cpufreq/Kconfig"
 
-source "drivers/cpuidle/Kconfig"
+#source "drivers/cpuidle/Kconfig"
 
 source "drivers/idle/Kconfig"
 
@@ -3026,6 +3026,6 @@ config HAVE_ATOMIC_IOMAP
 config X86_DEV_DMA_OPS
 	bool
 
-source "drivers/firmware/Kconfig"
+#source "drivers/firmware/Kconfig"
 
 source "arch/x86/kvm/Kconfig"

@@ -492,7 +492,7 @@ struct irq_domain *hpet_create_irq_domain(int hpet_id)
 	domain_info->data = (void *)(long)hpet_id;
 
 	init_irq_alloc_info(&info, NULL);
-	info.type = X86_IRQ_ALLOC_TYPE_HPET_GET_PARENT;
+	info.type = X86_IRQ_ALLOC_TYPE_HPET;
 	info.devid = hpet_id;
 	parent = irq_remapping_get_irq_domain(&info);
 	if (parent == NULL)

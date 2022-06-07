@@ -522,13 +522,13 @@ static inline int fpregs_state_valid(struct fpu *fpu, unsigned int cpu)
 static inline void fpregs_deactivate(struct fpu *fpu)
 {
 	this_cpu_write(fpu_fpregs_owner_ctx, NULL);
-	trace_x86_fpu_regs_deactivated(fpu);
+	//trace_x86_fpu_regs_deactivated(fpu);
 }
 
 static inline void fpregs_activate(struct fpu *fpu)
 {
 	this_cpu_write(fpu_fpregs_owner_ctx, fpu);
-	trace_x86_fpu_regs_activated(fpu);
+	//trace_x86_fpu_regs_activated(fpu);
 }
 
 /* Internal helper for switch_fpu_return() and signal frame setup */
@@ -579,7 +579,7 @@ static inline void switch_fpu_prepare(struct fpu *old_fpu, int cpu)
 			old_fpu->last_cpu = cpu;
 
 		/* But leave fpu_fpregs_owner_ctx! */
-		trace_x86_fpu_regs_deactivated(old_fpu);
+		//trace_x86_fpu_regs_deactivated(old_fpu);
 	}
 }
 

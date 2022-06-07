@@ -43,7 +43,9 @@ bool __init pit_timer_init(void)
 		return false;
 
 	clockevent_i8253_init(true);
+#if 0
 	global_clock_event = &i8253_clockevent;
+#endif
 	return true;
 }
 
@@ -57,8 +59,11 @@ static int __init init_pit_clocksource(void)
 	  * - when HPET is enabled
 	  * - when local APIC timer is active (PIT is switched off)
 	  */
-	if (num_possible_cpus() > 1 || is_hpet_enabled() ||
-	    !clockevent_state_periodic(&i8253_clockevent))
+	if (num_possible_cpus() > 1 || is_hpet_enabled()
+#if 0
+		|| !clockevent_state_periodic(&i8253_clockevent)
+#endif
+	   )
 		return 0;
 
 	return clocksource_i8253_init();

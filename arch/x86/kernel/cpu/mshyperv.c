@@ -317,7 +317,9 @@ static void __init ms_hyperv_init_platform(void)
 	 * the PIT really is shutdown. Generation 2 VMs don't have a PIT,
 	 * and setting this value has no effect.
 	 */
+#if 0
 	i8253_clear_counter_on_shutdown = false;
+#endif
 
 #if IS_ENABLED(CONFIG_HYPERV)
 	/*

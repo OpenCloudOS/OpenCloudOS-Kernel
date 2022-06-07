@@ -129,6 +129,14 @@
 	.long (handler) - . ;					\
 	.popsection
 
+# define _ASM_EXTABLE_TYPE(from, to, type)          \
+    .pushsection "__ex_table","a" ;             \
+    .balign 4 ;                     \
+    .long (from) - . ;                  \
+    .long (to) - . ;                    \
+    .long type ;                        \
+    .popsection
+
 # define _ASM_EXTABLE_EX(from, to)				\
 	_ASM_EXTABLE_HANDLE(from, to, ex_handler_ext)
 
@@ -156,6 +164,24 @@
 
 # define _ASM_EXTABLE_REFCOUNT(from, to)			\
 	_ASM_EXTABLE_HANDLE(from, to, ex_handler_refcount)
+
+# define _ASM_EXTABLE_TYPE(from, to, type)          \
+    " .pushsection \"__ex_table\",\"a\"\n"          \
+    " .balign 4\n"                      \
+    " .long (" #from ") - .\n"              \
+    " .long (" #to ") - .\n"                \
+    " .long " __stringify(type) " \n"           \
+    " .popsection\n"
+
+# define _ASM_EXTABLE_TYPE_REG(from, to, type, reg)             \
+    " .pushsection \"__ex_table\",\"a\"\n"                  \
+    " .balign 4\n"                              \
+    " .long (" #from ") - .\n"                      \
+    " .long (" #to ") - .\n"                        \
+    DEFINE_EXTABLE_TYPE_REG                         \
+    "extable_type_reg reg=" __stringify(reg) ", type=" __stringify(type) " \n"\
+    UNDEFINE_EXTABLE_TYPE_REG                       \
+    " .popsection\n"
 
 /* For C file, we already have NOKPROBE_SYMBOL macro */
 #endif

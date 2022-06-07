@@ -15,7 +15,7 @@
 #include <linux/mm.h>
 #include <linux/smp.h>
 #include <linux/kernel.h>
-#include <linux/kstrtox.h>
+//#include <linux/kstrtox.h>
 #include <linux/errno.h>
 #include <linux/wait.h>
 #include <linux/tracehook.h>
@@ -869,7 +869,7 @@ bool sigaltstack_size_valid(size_t ss_size)
 	lockdep_assert_held(&current->sighand->siglock);
 
 	if (strict_sigaltstack_size)
-		return ss_size > get_sigframe_size();
+		return ss_size > 512;
 
 	return true;
 }

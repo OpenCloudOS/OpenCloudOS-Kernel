@@ -673,8 +673,8 @@ static unsigned int __init get_xsaves_size(void)
  */
 static unsigned int __init get_xsaves_size_no_dynamic(void)
 {
-	u64 mask = xfeatures_mask_dynamic();
 	unsigned int size;
+	u64 mask = xfeatures_mask_dynamic();
 
 	if (!mask)
 		return get_xsaves_size();

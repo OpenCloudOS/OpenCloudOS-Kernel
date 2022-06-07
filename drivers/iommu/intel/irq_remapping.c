@@ -23,6 +23,9 @@
 
 #include "../irq_remapping.h"
 
+#define X86_MSI_BASE_ADDRESS_LOW   (0xfee00000 >> 20)
+#define X86_MSI_BASE_ADDRESS_HIGH   (0)
+
 enum irq_mode {
 	IRQ_REMAPPING,
 	IRQ_POSTING,
@@ -64,6 +67,11 @@ struct intel_ir_data {
 static int __read_mostly eim_mode;
 static struct ioapic_scope ir_ioapic[MAX_IO_APICS];
 static struct hpet_scope ir_hpet[MAX_HPET_TBS];
+
+static int x86_fwspec_is_ioapic(struct irq_fwspec *fwspec)
+{return 0;}
+static int x86_fwspec_is_hpet(struct irq_fwspec *fwspec)
+{return 0;}
 
 /*
  * Lock ordering:
@@ -1239,15 +1247,17 @@ static void fill_msi_msg(struct msi_msg *msg, u32 index, u32 subhandle)
 {
 	memset(msg, 0, sizeof(*msg));
 
-	msg->arch_addr_lo.dmar_base_address = X86_MSI_BASE_ADDRESS_LOW;
+	msg->arch_addr_lo.address_lo = X86_MSI_BASE_ADDRESS_LOW;
+#if 0
 	msg->arch_addr_lo.dmar_subhandle_valid = true;
 	msg->arch_addr_lo.dmar_format = true;
 	msg->arch_addr_lo.dmar_index_0_14 = index & 0x7FFF;
 	msg->arch_addr_lo.dmar_index_15 = !!(index & 0x8000);
+#endif
 
 	msg->address_hi = X86_MSI_BASE_ADDRESS_HIGH;
 
-	msg->arch_data.dmar_subhandle = subhandle;
+	msg->arch_data.data = subhandle;
 }
 
 static void intel_irq_remapping_prepare_irte(struct intel_ir_data *data,

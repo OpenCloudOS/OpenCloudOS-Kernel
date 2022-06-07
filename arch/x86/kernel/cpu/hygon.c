@@ -28,6 +28,8 @@
 static u32 nodes_per_socket = 1;
 
 #ifdef CONFIG_NUMA
+#include <asm/numa.h>
+
 /*
  * To workaround broken NUMA config.  Read the comment in
  * srat_detect_node().

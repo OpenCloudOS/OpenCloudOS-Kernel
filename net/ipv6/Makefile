@@ -29,9 +29,9 @@ ipv6-$(CONFIG_IPV6_SEG6_HMAC) += seg6_hmac.o
 
 ipv6-objs += $(ipv6-y)
 
-obj-$(CONFIG_INET6_AH) += ah6.o
-obj-$(CONFIG_INET6_ESP) += esp6.o
-obj-$(CONFIG_INET6_ESP_OFFLOAD) += esp6_offload.o
+#obj-$(CONFIG_INET6_AH) += ah6.o
+#obj-$(CONFIG_INET6_ESP) += esp6.o
+#obj-$(CONFIG_INET6_ESP_OFFLOAD) += esp6_offload.o
 obj-$(CONFIG_INET6_IPCOMP) += ipcomp6.o
 obj-$(CONFIG_INET6_XFRM_TUNNEL) += xfrm6_tunnel.o
 obj-$(CONFIG_INET6_TUNNEL) += tunnel6.o

@@ -34,6 +34,8 @@
 
 #include "../irq_remapping.h"
 
+#define ecap_vcs(e)               (((e) >> 44) & 0x1)
+
 typedef int (*dmar_res_handler_t)(struct acpi_dmar_header *, void *);
 struct dmar_res_callback {
 	dmar_res_handler_t	cb[ACPI_DMAR_TYPE_RESERVED];

@@ -238,8 +238,10 @@ int intel_svm_bind_mm(struct device *dev, int *pasid, int flags, struct svm_dev_
 	if (!iommu || dmar_disabled)
 		return -EINVAL;
 
+#if 0
 	if (!intel_svm_capable(iommu))
 		return -ENOTSUPP;
+#endif
 
 	if (dev_is_pci(dev)) {
 		pasid_max = pci_max_pasids(to_pci_dev(dev));
@@ -630,7 +632,7 @@ static irqreturn_t prq_event_thread(int irq, void *d)
 		if (req->wr_req)
 			flags |= FAULT_FLAG_WRITE;
 
-		ret = handle_mm_fault(vma, address, flags, NULL);
+		ret = handle_mm_fault(vma, address, flags);
 		if (ret & VM_FAULT_ERROR)
 			goto invalid;
 

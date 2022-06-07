@@ -64,6 +64,14 @@ struct fsl_dma_domain {
 };
 
 /* domain-device relationship */
+struct subdev_domain_info{
+	struct list_head link;	/* link to domain siblings */
+	struct device *dev;
+	u32 liodn;
+	struct fsl_dma_domain *domain; /* pointer to domain */
+};
+
+/* domain-device relationship */
 struct device_domain_info {
 	struct list_head link;	/* link to domain siblings */
 	struct device *dev;

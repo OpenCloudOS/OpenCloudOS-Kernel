@@ -288,7 +288,9 @@ static struct ctl_table vm_table[];
 static struct ctl_table fs_table[];
 static struct ctl_table debug_table[];
 static struct ctl_table dev_table[];
+#if 0
 extern struct ctl_table random_table[];
+#endif
 #ifdef CONFIG_EPOLL
 extern struct ctl_table epoll_table[];
 #endif
@@ -943,11 +945,13 @@ static struct ctl_table kern_table[] = {
 		.mode		= 0644,
 		.proc_handler	= sysctl_max_threads,
 	},
+#if 0
 	{
 		.procname	= "random",
 		.mode		= 0555,
 		.child		= random_table,
 	},
+#endif
 	{
 		.procname	= "usermodehelper",
 		.mode		= 0555,

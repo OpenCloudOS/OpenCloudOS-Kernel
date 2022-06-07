@@ -63,4 +63,20 @@ void copy_kernel_to_dynamic_supervisor(struct xregs_state *xstate, u64 mask);
 /* Validate an xstate header supplied by userspace (ptrace or sigreturn) */
 int validate_user_xstate_header(const struct xstate_header *hdr);
 
+static u64 xfeatures_mask_dynamic(void)
+{
+	return 0xfffffffffff;
+}
+
+static u64 xfeatures_mask_supervisor(void)
+{
+	return 0xfffffffffff;
+}
+
+static void fpu_sync_fpstate (struct fpu * fpu)
+{
+	(void)fpu;
+}
+
+static u64 xfeatures_mask_all = 0xfffffffffff;
 #endif

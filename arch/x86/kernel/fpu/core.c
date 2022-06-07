@@ -134,7 +134,7 @@ void fpu__save(struct fpu *fpu)
 	WARN_ON_FPU(fpu != &current->thread.fpu);
 
 	fpregs_lock();
-	trace_x86_fpu_before_save(fpu);
+	//trace_x86_fpu_before_save(fpu);
 
 	if (!test_thread_flag(TIF_NEED_FPU_LOAD)) {
 		if (!copy_fpregs_to_fpstate(fpu)) {
@@ -142,7 +142,7 @@ void fpu__save(struct fpu *fpu)
 		}
 	}
 
-	trace_x86_fpu_after_save(fpu);
+	//trace_x86_fpu_after_save(fpu);
 	fpregs_unlock();
 }
 
@@ -212,8 +212,8 @@ int fpu__copy(struct task_struct *dst, struct task_struct *src)
 
 	set_tsk_thread_flag(dst, TIF_NEED_FPU_LOAD);
 
-	trace_x86_fpu_copy_src(src_fpu);
-	trace_x86_fpu_copy_dst(dst_fpu);
+	//trace_x86_fpu_copy_src(src_fpu);
+	//trace_x86_fpu_copy_dst(dst_fpu);
 
 	return 0;
 }
@@ -228,7 +228,7 @@ static void fpu__initialize(struct fpu *fpu)
 
 	set_thread_flag(TIF_NEED_FPU_LOAD);
 	fpstate_init(&fpu->state);
-	trace_x86_fpu_init_state(fpu);
+	//trace_x86_fpu_init_state(fpu);
 }
 
 /*
@@ -296,7 +296,7 @@ void fpu__drop(struct fpu *fpu)
 		fpregs_deactivate(fpu);
 	}
 
-	trace_x86_fpu_dropped(fpu);
+	//trace_x86_fpu_dropped(fpu);
 
 	preempt_enable();
 }
@@ -335,17 +335,6 @@ static void fpu__clear(struct fpu *fpu, bool user_only)
 	}
 
 	fpregs_lock();
-
-	if (user_only) {
-		if (!fpregs_state_valid(fpu, smp_processor_id()) &&
-		    xfeatures_mask_supervisor())
-			copy_kernel_to_xregs(&fpu->state.xsave,
-					     xfeatures_mask_supervisor());
-		copy_init_fpstate_to_fpregs(xfeatures_mask_user());
-	} else {
-		copy_init_fpstate_to_fpregs(xfeatures_mask_all);
-	}
-
 	fpregs_mark_activate();
 	fpregs_unlock();
 }

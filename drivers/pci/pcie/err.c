@@ -169,8 +169,11 @@ void pcie_do_recovery(struct pci_dev *dev,
 	} else {
 		pci_walk_bus(bus, report_normal_detected, &status);
 	}
-	if (state == pci_channel_io_frozen &&
-	    reset_link(dev, service) != PCI_ERS_RESULT_RECOVERED)
+	if (state == pci_channel_io_frozen
+#if 0
+		&& reset_link(dev, service) != PCI_ERS_RESULT_RECOVERED
+#endif
+		)
 		goto failed;
 
 	if (status == PCI_ERS_RESULT_CAN_RECOVER) {

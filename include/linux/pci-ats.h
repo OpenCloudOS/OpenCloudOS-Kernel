@@ -6,6 +6,7 @@
 
 #ifdef CONFIG_PCI_PRI
 
+extern bool pci_ats_supported(struct pci_dev *d);
 int pci_enable_pri(struct pci_dev *pdev, u32 reqs);
 void pci_disable_pri(struct pci_dev *pdev);
 void pci_restore_pri_state(struct pci_dev *pdev);

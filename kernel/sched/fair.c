@@ -4235,7 +4235,11 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
 		return;
 	}
 
-	if (task_fits_capacity(p, capacity_of(cpu_of(rq)))) {
+#ifdef CONFIG_SCHED_BT
+	if (task_fits_capacity(p, capacity_of(cpu_of(rq), p->se.is_bt))) {
+#else
+	if (task_fits_capacity(p, capacity_of(cpu_of(rq), 0))) {
+#endif
 		rq->misfit_task_load = 0;
 		return;
 	}
@@ -5761,7 +5765,11 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	 * Let's add the task's estimated utilization to the cfs_rq's
 	 * estimated utilization, before we update schedutil.
 	 */
-	util_est_enqueue(&rq->cfs, p);
+#ifdef CONFIG_SCHED_BT
+	util_est_enqueue(&rq->cfs[1], p);
+#else
+	util_est_enqueue(&rq->cfs[0], p);
+#endif
 
 	/*
 	 * If in_iowait is set, the code below may not trigger any cpufreq
@@ -5826,7 +5834,11 @@ enqueue_throttle:
 		 * and the following generally works well enough in practice.
 		 */
 		if (!task_new)
-			update_overutilized_status(rq);
+#ifdef CONFIG_SCHED_BT
+			update_overutilized_status(rq, 1);
+#else
+			update_overutilized_status(rq, 0);
+#endif
 
 	}
 
@@ -5845,7 +5857,7 @@ enqueue_throttle:
 		}
 	}
 
-	assert_list_leaf_cfs_rq(rq);
+	assert_list_leaf_cfs_rq(rq, 0);
 
 	hrtick_update(rq);
 }
@@ -5863,9 +5875,6 @@ static void dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 	struct sched_entity *se = &p->se;
 	int task_sleep = flags & DEQUEUE_SLEEP;
 	int idle_h_nr_running = task_has_idle_policy(p);
-#ifdef CONFIG_SCHED_BT
-	int bt_nr_running = task_has_bt_policy(p);
-#endif
 #ifdef CONFIG_SCHED_BT
 	int bt_nr_running = task_has_bt_policy(p);
 	int isbt = se->is_bt;
@@ -5918,7 +5927,11 @@ dequeue_throttle:
 	if (!se)
 		sub_nr_running(rq, 1);
 
-	util_est_dequeue(&rq->cfs, p, task_sleep);
+#ifdef CONFIG_SCHED_BT
+	util_est_dequeue(&rq->cfs[1], p, task_sleep);
+#else
+	util_est_dequeue(&rq->cfs[0], p, task_sleep);
+#endif
 	hrtick_update(rq);
 }
 
@@ -10348,7 +10361,11 @@ static void kick_ilb(unsigned int flags)
 	 * not if we only update stats.
 	 */
 	if (flags & NOHZ_BALANCE_KICK)
-		nohz.next_balance = jiffies+1;
+#ifdef CONFIG_SCHED_BT
+		nohz.next_balance[1] = jiffies+1;
+#else
+		nohz.next_balance[0] = jiffies+1;
+#endif
 
 	ilb_cpu = find_new_ilb();
 
@@ -10712,7 +10729,11 @@ static bool _nohz_idle_balance(struct rq *this_rq, unsigned int flags,
 	 * updated.
 	 */
 	if (likely(update_next_balance))
-		nohz.next_balance = next_balance;
+#ifdef CONFIG_SCHED_BT
+		nohz.next_balance[1] = next_balance;
+#else
+		nohz.next_balance[0] = next_balance;
+#endif
 
 	/* Newly idle CPU doesn't need an update */
 	if (idle != CPU_NEWLY_IDLE) {

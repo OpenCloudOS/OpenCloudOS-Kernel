@@ -247,7 +247,7 @@ static uint32_t __init vmware_platform(void)
 
 			return CPUID_VMWARE_INFO_LEAF;
 		}
-	} else if (dmi_available && dmi_name_in_serial("VMware") &&
+	} else if (dmi_name_in_serial("VMware") &&
 		   __vmware_platform())
 		return 1;
 

@@ -31,6 +31,22 @@ void pci_ats_init(struct pci_dev *dev)
 }
 
 /**
+ *  * pci_ats_supported - check if the device can use ATS
+ *   * @dev: the PCI device
+ *    *
+ *     * Returns true if the device supports ATS and is allowed to use it, false
+ *      * otherwise.
+ *       */
+bool pci_ats_supported(struct pci_dev *dev)
+{
+    if (!dev->ats_cap)
+        return false;
+
+    return (dev->untrusted == 0); 
+}
+EXPORT_SYMBOL_GPL(pci_ats_supported);
+
+/**
  * pci_enable_ats - enable the ATS capability
  * @dev: the PCI device
  * @ps: the IOMMU page shift
@@ -289,9 +305,11 @@ EXPORT_SYMBOL_GPL(pci_reset_pri);
  */
 bool pci_pri_supported(struct pci_dev *pdev)
 {
+#if 0
 	/* VFs share the PF PRI */
 	if (pci_physfn(pdev)->pri_cap)
 		return true;
+#endif
 	return false;
 }
 EXPORT_SYMBOL_GPL(pci_pri_supported);

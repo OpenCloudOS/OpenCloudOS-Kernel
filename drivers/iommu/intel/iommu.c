@@ -103,6 +103,38 @@
  */
 #define INTEL_IOMMU_PGSIZES	(~0xFFFUL)
 
+static int dmar_forcedac;
+
+struct device_domain_info *get_domain_info(struct device *dev)
+{
+	return NULL;
+}
+
+static bool dev_is_real_dma_subdevice(struct device *dev)
+{
+	return 0;
+}
+
+static void domain_reserve_special_ranges(struct dmar_domain *domain)
+{
+	return;
+}
+
+static int vcmd_alloc_pasid(struct intel_iommu *iommu, u32 *pasid)
+{
+	return 0;
+}
+
+static void vcmd_free_pasid(struct intel_iommu *iommu, u32 pasid)
+{
+	return;
+}
+
+static int iommu_request_dma_domain_for_dev(struct device *dev)
+{
+	return 0;
+}
+
 static inline int agaw_to_level(int agaw)
 {
 	return agaw + 2;
@@ -456,7 +488,7 @@ static int __init intel_iommu_setup(char *str)
 			pr_info("Disable GFX device mapping\n");
 		} else if (!strncmp(str, "forcedac", 8)) {
 			pr_warn("intel_iommu=forcedac deprecated; use iommu.forcedac instead\n");
-			iommu_dma_forcedac = true;
+			//iommu_dma_forcedac = true;
 		} else if (!strncmp(str, "strict", 6)) {
 			pr_info("Disable batched IOTLB flush\n");
 			intel_iommu_strict = 1;
@@ -5113,6 +5145,17 @@ static inline bool has_external_pci(void)
 	return false;
 }
 
+static inline bool has_untrusted_dev(void)
+{
+    struct pci_dev *pdev = NULL;
+
+    for_each_pci_dev(pdev)
+        if (pdev->untrusted)
+            return true;
+
+    return false;
+}
+
 static int __init platform_optin_force_iommu(void)
 {
 	if (!dmar_platform_optin() || no_platform_optin || !has_external_pci())
@@ -6119,10 +6162,10 @@ intel_iommu_dev_has_feat(struct device *dev, enum iommu_dev_features feat)
 		return !!siov_find_pci_dvsec(to_pci_dev(dev));
 	}
 
-	if (feat == IOMMU_DEV_FEAT_IOPF)
+	if (feat == IOMMU_DEV_FEAT_SVA)
 		return info && info->pri_supported;
 
-	if (feat == IOMMU_DEV_FEAT_SVA)
+	if (feat == IOMMU_DEV_FEAT_AUX)
 		return info && (info->iommu->flags & VTD_FLAG_SVM_CAPABLE) &&
 			info->pasid_supported && info->pri_supported &&
 			info->ats_supported;
@@ -6136,10 +6179,10 @@ intel_iommu_dev_enable_feat(struct device *dev, enum iommu_dev_features feat)
 	if (feat == IOMMU_DEV_FEAT_AUX)
 		return intel_iommu_enable_auxd(dev);
 
-	if (feat == IOMMU_DEV_FEAT_IOPF)
+	if (feat == IOMMU_DEV_FEAT_SVA)
 		return intel_iommu_dev_has_feat(dev, feat) ? 0 : -ENODEV;
 
-	if (feat == IOMMU_DEV_FEAT_SVA) {
+	if (feat == IOMMU_DEV_FEAT_AUX) {
 		struct device_domain_info *info = get_domain_info(dev);
 
 		if (!info)

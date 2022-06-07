@@ -1174,9 +1174,11 @@ void __init setup_arch(char **cmdline_p)
 	 * NOTE: On x86-32, only from this point on, fixmaps are ready for use.
 	 */
 
+#if 0
 #ifdef CONFIG_PROVIDE_OHCI1394_DMA_INIT
 	if (init_ohci1394_dma_early)
 		init_ohci1394_dma_on_all_controllers();
+#endif
 #endif
 	/* Allocate bigger log buffer */
 	setup_log_buf(1);

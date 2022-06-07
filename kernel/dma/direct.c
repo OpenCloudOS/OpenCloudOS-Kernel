@@ -14,6 +14,7 @@
 #include <linux/pfn.h>
 #include <linux/set_memory.h>
 #include <linux/swiotlb.h>
+#include <asm/dma-direct.h>
 
 /*
  * Most architectures use ZONE_DMA for the first 16 Megabytes, but

@@ -35,6 +35,8 @@ struct vcpu_data {
 
 extern raw_spinlock_t irq_2_ir_lock;
 
+extern struct irq_domain *
+irq_remapping_get_irq_domain(struct irq_alloc_info *info);
 extern bool irq_remapping_cap(enum irq_remap_cap cap);
 extern void set_irq_remapping_broken(void);
 extern int irq_remapping_prepare(void);

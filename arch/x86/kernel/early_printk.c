@@ -381,8 +381,10 @@ static int __init setup_early_printk(char *buf)
 			early_console_register(&early_vga_console, keep);
 		}
 #ifdef CONFIG_EARLY_PRINTK_DBGP
+#if 0
 		if (!strncmp(buf, "dbgp", 4) && !early_dbgp_init(buf + 4))
 			early_console_register(&early_dbgp_console, keep);
+#endif
 #endif
 #ifdef CONFIG_HVC_XEN
 		if (!strncmp(buf, "xen", 3))

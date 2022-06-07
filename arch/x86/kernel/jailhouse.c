@@ -184,8 +184,10 @@ static void __init jailhouse_init_platform(void)
 	if (setup_data.compatible_version > JAILHOUSE_SETUP_REQUIRED_VERSION)
 		panic("Jailhouse: Unsupported setup data structure");
 
+#if 0
 	pmtmr_ioport = setup_data.pm_timer_address;
 	pr_debug("Jailhouse: PM-Timer IO Port: %#x\n", pmtmr_ioport);
+#endif
 
 	precalibrated_tsc_khz = setup_data.tsc_khz;
 	setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);

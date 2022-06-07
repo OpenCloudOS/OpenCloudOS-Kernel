@@ -20,7 +20,7 @@ if BLOCK
 config FS_IOMAP
 	bool
 
-source "fs/ext2/Kconfig"
+#source "fs/ext2/Kconfig"
 source "fs/ext4/Kconfig"
 source "fs/jbd2/Kconfig"
 
@@ -31,16 +31,16 @@ config FS_MBCACHE
 	default y if EXT4_FS=y
 	default m if EXT2_FS_XATTR || EXT4_FS
 
-source "fs/reiserfs/Kconfig"
-source "fs/jfs/Kconfig"
+#source "fs/reiserfs/Kconfig"
+#source "fs/jfs/Kconfig"
 
 source "fs/xfs/Kconfig"
-source "fs/gfs2/Kconfig"
-source "fs/ocfs2/Kconfig"
-source "fs/btrfs/Kconfig"
-source "fs/nilfs2/Kconfig"
-source "fs/f2fs/Kconfig"
-source "fs/dmemfs/Kconfig"
+#source "fs/gfs2/Kconfig"
+#source "fs/ocfs2/Kconfig"
+#source "fs/btrfs/Kconfig"
+#source "fs/nilfs2/Kconfig"
+#source "fs/f2fs/Kconfig"
+#source "fs/dmemfs/Kconfig"
 
 config FS_DAX
 	bool "Direct Access (DAX) support"
@@ -111,42 +111,42 @@ config MANDATORY_FILE_LOCKING
 
 	  To the best of my knowledge this is dead code that no one cares about.
 
-source "fs/crypto/Kconfig"
+#source "fs/crypto/Kconfig"
 
-source "fs/verity/Kconfig"
+#source "fs/verity/Kconfig"
 
 source "fs/notify/Kconfig"
 
-source "fs/quota/Kconfig"
+#source "fs/quota/Kconfig"
 
-source "fs/autofs/Kconfig"
+#source "fs/autofs/Kconfig"
 source "fs/fuse/Kconfig"
 source "fs/overlayfs/Kconfig"
 
 menu "Caches"
 
-source "fs/fscache/Kconfig"
-source "fs/cachefiles/Kconfig"
+#source "fs/fscache/Kconfig"
+#source "fs/cachefiles/Kconfig"
 
 endmenu
 
 if BLOCK
 menu "CD-ROM/DVD Filesystems"
 
-source "fs/isofs/Kconfig"
-source "fs/udf/Kconfig"
+#source "fs/isofs/Kconfig"
+#source "fs/udf/Kconfig"
 
 endmenu
 endif # BLOCK
 
-if BLOCK
-menu "DOS/FAT/NT Filesystems"
-
-source "fs/fat/Kconfig"
-source "fs/ntfs/Kconfig"
-
-endmenu
-endif # BLOCK
+#if BLOCK
+#menu "DOS/FAT/NT Filesystems"
+#
+##source "fs/fat/Kconfig"
+##source "fs/ntfs/Kconfig"
+#
+#endmenu
+#endif # BLOCK
 
 menu "Pseudo filesystems"
 
@@ -222,7 +222,7 @@ config ARCH_HAS_GIGANTIC_PAGE
 	bool
 
 source "fs/configfs/Kconfig"
-source "fs/efivarfs/Kconfig"
+#source "fs/efivarfs/Kconfig"
 
 endmenu
 
@@ -241,31 +241,31 @@ menuconfig MISC_FILESYSTEMS
 
 if MISC_FILESYSTEMS
 
-source "fs/orangefs/Kconfig"
-source "fs/adfs/Kconfig"
-source "fs/affs/Kconfig"
-source "fs/ecryptfs/Kconfig"
-source "fs/hfs/Kconfig"
-source "fs/hfsplus/Kconfig"
-source "fs/befs/Kconfig"
-source "fs/bfs/Kconfig"
-source "fs/efs/Kconfig"
-source "fs/jffs2/Kconfig"
-# UBIFS File system configuration
-source "fs/ubifs/Kconfig"
-source "fs/cramfs/Kconfig"
+#source "fs/orangefs/Kconfig"
+#source "fs/adfs/Kconfig"
+#source "fs/affs/Kconfig"
+#source "fs/ecryptfs/Kconfig"
+#source "fs/hfs/Kconfig"
+#source "fs/hfsplus/Kconfig"
+#source "fs/befs/Kconfig"
+#source "fs/bfs/Kconfig"
+#source "fs/efs/Kconfig"
+#source "fs/jffs2/Kconfig"
+## UBIFS File system configuration
+#source "fs/ubifs/Kconfig"
+#source "fs/cramfs/Kconfig"
 source "fs/squashfs/Kconfig"
-source "fs/freevxfs/Kconfig"
-source "fs/minix/Kconfig"
-source "fs/omfs/Kconfig"
-source "fs/hpfs/Kconfig"
-source "fs/qnx4/Kconfig"
-source "fs/qnx6/Kconfig"
-source "fs/romfs/Kconfig"
-source "fs/pstore/Kconfig"
-source "fs/sysv/Kconfig"
-source "fs/ufs/Kconfig"
-source "fs/erofs/Kconfig"
+#source "fs/freevxfs/Kconfig"
+#source "fs/minix/Kconfig"
+#source "fs/omfs/Kconfig"
+#source "fs/hpfs/Kconfig"
+#source "fs/qnx4/Kconfig"
+#source "fs/qnx6/Kconfig"
+#source "fs/romfs/Kconfig"
+#source "fs/pstore/Kconfig"
+#source "fs/sysv/Kconfig"
+#source "fs/ufs/Kconfig"
+#source "fs/erofs/Kconfig"
 
 endif # MISC_FILESYSTEMS
 
@@ -285,8 +285,8 @@ menuconfig NETWORK_FILESYSTEMS
 
 if NETWORK_FILESYSTEMS
 
-source "fs/nfs/Kconfig"
-source "fs/nfsd/Kconfig"
+#source "fs/nfs/Kconfig"
+#source "fs/nfsd/Kconfig"
 
 config GRACE_PERIOD
 	tristate
@@ -311,17 +311,17 @@ config NFS_COMMON
 	depends on NFSD || NFS_FS || LOCKD
 	default y
 
-source "net/sunrpc/Kconfig"
-source "fs/ceph/Kconfig"
-source "fs/cifs/Kconfig"
-source "fs/coda/Kconfig"
-source "fs/afs/Kconfig"
-source "fs/9p/Kconfig"
+#source "net/sunrpc/Kconfig"
+#source "fs/ceph/Kconfig"
+#source "fs/cifs/Kconfig"
+#source "fs/coda/Kconfig"
+#source "fs/afs/Kconfig"
+#source "fs/9p/Kconfig"
 
 endif # NETWORK_FILESYSTEMS
 
-source "fs/nls/Kconfig"
-source "fs/dlm/Kconfig"
-source "fs/unicode/Kconfig"
+#source "fs/nls/Kconfig"
+#source "fs/dlm/Kconfig"
+#source "fs/unicode/Kconfig"
 
 endmenu

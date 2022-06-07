@@ -500,7 +500,7 @@ ssize_t fuse_simple_request(struct fuse_conn *fc, struct fuse_args *args)
 	fuse_args_to_req(req, args);
 
 	if (extfuse_request_send(fc, req) != -ENOSYS)
-		return;
+		return PTR_ERR(req);
 	if (!args->noreply)
 		__set_bit(FR_ISREPLY, &req->flags);
 	__fuse_request_send(fc, req);

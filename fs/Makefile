@@ -56,7 +56,6 @@ obj-$(CONFIG_SYSCTL)		+= drop_caches.o
 obj-$(CONFIG_FHANDLE)		+= fhandle.o
 obj-y				+= iomap/
 
-obj-y				+= quota/
 
 obj-$(CONFIG_PROC_FS)		+= proc/
 obj-$(CONFIG_KERNFS)		+= kernfs/
@@ -89,10 +88,6 @@ obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/ # Before hfs to find wrapped HFS+
 obj-$(CONFIG_HFS_FS)		+= hfs/
 obj-$(CONFIG_ECRYPT_FS)		+= ecryptfs/
 obj-$(CONFIG_VXFS_FS)		+= freevxfs/
-obj-$(CONFIG_NFS_FS)		+= nfs/
-obj-$(CONFIG_EXPORTFS)		+= exportfs/
-obj-$(CONFIG_NFSD)		+= nfsd/
-obj-$(CONFIG_LOCKD)		+= lockd/
 obj-$(CONFIG_NLS)		+= nls/
 obj-$(CONFIG_UNICODE)		+= unicode/
 obj-$(CONFIG_SYSV_FS)		+= sysv/

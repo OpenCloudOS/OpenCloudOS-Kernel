@@ -115,11 +115,11 @@ config PARIDE
 	  "MicroSolutions backpack protocol", "DataStor Commuter protocol"
 	  etc.).
 
-source "drivers/block/paride/Kconfig"
+#source "drivers/block/paride/Kconfig"
 
 source "drivers/block/mtip32xx/Kconfig"
 
-source "drivers/block/zram/Kconfig"
+#source "drivers/block/zram/Kconfig"
 
 config BLK_DEV_UMEM
 	tristate "Micro Memory MM5415 Battery Backed RAM support"
@@ -244,7 +244,7 @@ config BLK_DEV_CRYPTOLOOP
 	  instead, which can be configured to be on-disk compatible with the
 	  cryptoloop device.
 
-source "drivers/block/drbd/Kconfig"
+#source "drivers/block/drbd/Kconfig"
 
 config BLK_DEV_NBD
 	tristate "Network block device support"
@@ -386,7 +386,7 @@ config SUNVDC
 	  Support for virtual disk devices as a client under Sun
 	  Logical Domains.
 
-source "drivers/s390/block/Kconfig"
+#source "drivers/s390/block/Kconfig"
 
 config XILINX_SYSACE
 	tristate "Xilinx SystemACE support"

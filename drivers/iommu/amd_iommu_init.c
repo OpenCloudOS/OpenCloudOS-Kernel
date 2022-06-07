@@ -258,6 +258,9 @@ static int iommu_pc_get_set_reg(struct amd_iommu *iommu, u8 bank, u8 cntr,
 
 static bool amd_iommu_pre_enabled = true;
 
+static u32 x86_msi_msg_get_destid(struct msi_msg *msg, bool extid)
+{return 0;}
+
 bool translation_pre_enabled(struct amd_iommu *iommu)
 {
 	return (iommu->flags & AMD_IOMMU_FLAG_TRANS_PRE_ENABLED);
@@ -2011,8 +2014,8 @@ static void iommu_update_intcapxt(struct amd_iommu *iommu)
 	destid = x86_msi_msg_get_destid(&msg, x2apic_enabled());
 
 	xt.capxt = 0ULL;
-	xt.dest_mode_logical = msg.arch_data.dest_mode_logical;
-	xt.vector = msg.arch_data.vector;
+	xt.dest_mode_logical = msg.arch_data.data;
+	xt.vector = msg.arch_data.data;
 	xt.destid_0_23 = destid & GENMASK(23, 0);
 	xt.destid_24_31 = destid >> 24;
 

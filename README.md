@@ -1,0 +1,2 @@
+# OpenCloudOS-Kernel
+TencentOS Server kernel源代码已经移到OepnCloudOS社区维护,OpenCloudOS kernel是TencentOS Server kernel镜像输出的稳定社区版本.
